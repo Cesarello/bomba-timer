@@ -1,0 +1,11 @@
+flutter_native_splash:
+  color: "#356d35"
+  color_dark: "#356d35"
+  fullscreen: false
+  web: false
+  ios: true
+  android: true
+  android_12:
+    color: "#356d35"
+    image: "assets/icons/icon-trasp.png"
+    color_dark: "#161616"

@@ -10,6 +10,8 @@ dependencies:
   audioplayers: ^6.4.0
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.6
+  icons_launcher: ^3.0.1
   provider: ^6.1.5
   shared_preferences: ^2.5.3
   styled_text: ^8.1.0
@@ -24,3 +26,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+
+
+#dart run icons_launcher:create --path assets/icons/icons_launcher.yaml
+#dart pub run flutter_native_splash:create --path=assets/icons/flutter_native_splash.yaml
