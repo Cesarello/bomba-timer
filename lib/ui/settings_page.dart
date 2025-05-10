@@ -187,10 +187,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   okButton: () {
                     AppPreferences().reset();
                     context.pop();
+                    context.pop();
                   },
                 );
-                // AppPreferences().reset();
-                // context.pop();
+                context.snackbar("Impostazioni ripristinate", false);
               },
               child: Text("Ripristina valori predefiniti"),
             ),
