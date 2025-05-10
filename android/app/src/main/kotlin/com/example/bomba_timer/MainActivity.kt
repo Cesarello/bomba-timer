@@ -1,4 +1,4 @@
-package com.example.bomba_timer
+package com.cesarello.timerbomb
 
 import io.flutter.embedding.android.FlutterActivity
 
