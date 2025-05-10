@@ -5,10 +5,13 @@ import 'package:bomba_timer/helpers/app_preferences.dart';
 import 'package:bomba_timer/helpers/context.dart';
 import 'package:bomba_timer/helpers/lists.dart';
 import 'package:bomba_timer/models/settings_model.dart';
-import 'package:bomba_timer/providers/bomb_provider.dart';
-import 'package:bomba_timer/ui/settingspage.dart';
 import 'package:flutter/material.dart';
 import 'package:styled_text/styled_text.dart';
+import 'package:vibration/vibration.dart';
+
+import '../helpers/theme.dart';
+import '../providers/bomb_provider.dart';
+import 'settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,6 +26,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    AppTheme.adaptiveStatusBar(context);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await player.setSource(AssetSource('slow.mp3'));
     });
@@ -32,12 +36,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("passa la bomba"), centerTitle: true),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               StyledText(
                 text: getPosiz(),
@@ -75,34 +79,50 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Text(isPlaying ? "Stop" : "Inizia"),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.push(SettingsPage());
-                },
-                child: Text("Impostazioni"),
-              ),
+              SizedBox(height: 20),
             ],
           ),
         ),
       ),
+      persistentFooterAlignment: AlignmentDirectional.bottomCenter,
+      persistentFooterButtons: [
+        TextButton(
+          onPressed:
+              isPlaying
+                  ? null
+                  : () {
+                    context.push(SettingsPage());
+                  },
+          child: Text("Impostazioni"),
+        ),
+      ],
     );
   }
 
   startSound() async {
-    await player.setSource(AssetSource('slow.mp3'));
-    await player.resume();
-    if (!mounted) return;
-    await Future.delayed(Duration(seconds: slowDuration()));
-    await player.stop();
+    if ((AppPreference.settings.get() as SettingsModel).sound) {
+      await player.setSource(AssetSource('slow.mp3'));
+      await player.resume();
+      if (!mounted) return;
+      await Future.delayed(Duration(seconds: slowDuration()));
+      await player.stop();
+      if (!isPlaying) return;
+      await player.setSource(AssetSource('fast.mp3'));
+      await player.resume();
+      if (!mounted) return;
+      await Future.delayed(Duration(seconds: fastDuration()));
+      await player.stop();
+      if (!isPlaying) return;
+      await player.setSource(AssetSource('explosion.mp3'));
+      await player.resume();
+    } else {
+      await Future.delayed(Duration(seconds: slowDuration()));
+      await Future.delayed(Duration(seconds: fastDuration()));
+    }
     if (!isPlaying) return;
-    await player.setSource(AssetSource('fast.mp3'));
-    await player.resume();
-    if (!mounted) return;
-    await Future.delayed(Duration(seconds: fastDuration()));
-    await player.stop();
-    if (!isPlaying) return;
-    await player.setSource(AssetSource('explosion.mp3'));
-    await player.resume();
+    if ((AppPreference.settings.get() as SettingsModel).vibration) {
+      Vibration.vibrate(duration: 1500);
+    }
     isPlaying = false;
     setState(() {});
   }
