@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   audioplayers: ^6.4.0
+  build_runner: ^2.4.15
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2

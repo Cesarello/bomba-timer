@@ -46,9 +46,11 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(18.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               StyledText(
                 text: getPosiz(),
+                textAlign: TextAlign.center,
                 style: context.title,
                 tags: {
                   'b': StyledTextTag(
@@ -66,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                     offset: const Offset(0, 20),
                     child: Text(
                       getSillaba(),
+                      textAlign: TextAlign.center,
                       style: context.headlineLarge?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -75,13 +78,18 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              ElevatedButton(
-                onPressed: () async {
-                  isPlaying ? await player.stop() : startSound();
-                  isPlaying = !isPlaying;
-                  setState(() {});
-                },
-                child: Text(isPlaying ? "Stop" : "Inizia"),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.1,
+                ),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    isPlaying ? await player.stop() : startSound();
+                    isPlaying = !isPlaying;
+                    setState(() {});
+                  },
+                  child: Text(isPlaying ? "Stop" : "Inizia"),
+                ),
               ),
               SizedBox(height: 20),
             ],

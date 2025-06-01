@@ -2,7 +2,9 @@ flutter_native_splash:
   color: "#356d35"
   color_dark: "#356d35"
   fullscreen: false
-  web: false
+  web: true
+  image_web:  "assets/icons/icon-trasp.png"
+  image: "assets/icons/icon-trasp.png"
   ios: true
   android: true
   android_12:
