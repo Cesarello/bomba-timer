@@ -1,6 +1,6 @@
 class SettingsModel {
   int min, max;
-  bool posiz, sound, vibration, sillaba;
+  bool posiz, sound, vibration, sillaba, flash;
 
   SettingsModel({
     required this.min,
@@ -9,6 +9,7 @@ class SettingsModel {
     required this.sound,
     required this.vibration,
     required this.sillaba,
+    required this.flash,
   });
 
   static SettingsModel fromJson(Map<String, dynamic> json) {
@@ -19,6 +20,7 @@ class SettingsModel {
       sound: json['sound'] ?? true,
       vibration: json['vibration'] ?? true,
       sillaba: json['sillaba'] ?? true,
+      flash: json['flash'] ?? false,
     );
   }
 
@@ -30,6 +32,7 @@ class SettingsModel {
       'sound': sound,
       'vibration': vibration,
       'sillaba': sillaba,
+      'flash': flash,
     };
   }
 }
@@ -41,6 +44,7 @@ const String defaultSettings = '''
   "posiz": true,
   "sound": true,
   "vibration": true,
-  "sillaba": true
+  "sillaba": true,
+  "flash": false
 }
 ''';

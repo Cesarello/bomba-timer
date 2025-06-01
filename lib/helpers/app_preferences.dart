@@ -15,17 +15,17 @@ enum AppPreference {
   const AppPreference(this.id, this.defaultValue);
 
   dynamic get() {
+    SettingsModel res = SettingsModel.fromJson(jsonDecode(defaultSettings));
     String? json = sharedPreferences?.getString(id);
     if (json != null) {
       try {
-        return SettingsModel.fromJson(jsonDecode(json));
+        res = SettingsModel.fromJson(jsonDecode(json));
       } catch (e) {
         debugPrint(e.toString());
-        return null;
       }
-    } else {
-      return null;
     }
+
+    return res;
   }
 
   Future set(newValue) async {

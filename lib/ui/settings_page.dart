@@ -15,7 +15,11 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   TextEditingController minController = TextEditingController();
   TextEditingController maxController = TextEditingController();
-  bool vibration = true, sound = true, random = true, posiz = true;
+  bool vibration = true,
+      sound = true,
+      random = true,
+      posiz = true,
+      flash = false;
 
   @override
   void initState() {
@@ -26,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
     sound = sett.sound;
     random = sett.sillaba;
     posiz = sett.posiz;
+    flash = sett.flash;
     super.initState();
   }
 
@@ -66,6 +71,15 @@ class _SettingsPageState extends State<SettingsPage> {
                   value: vibration,
                   onChanged: (value) {
                     setState(() => vibration = value);
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text("Flash"),
+                trailing: Switch(
+                  value: flash,
+                  onChanged: (value) {
+                    setState(() => flash = value);
                   },
                 ),
               ),
@@ -171,6 +185,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   sound,
                   vibration,
                   random,
+                  flash,
                 );
                 context.pop();
                 context.snackbar("Impostazioni salvate", false);
@@ -207,6 +222,7 @@ class _SettingsPageState extends State<SettingsPage> {
         sett.vibration != vibration ||
         sett.sound != sound ||
         sett.sillaba != random ||
-        sett.posiz != posiz);
+        sett.posiz != posiz ||
+        sett.flash != flash);
   }
 }
